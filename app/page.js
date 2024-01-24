@@ -3,6 +3,7 @@
 
 import { useEffect, useState } from 'react';
 import Head from 'next/head';
+import ExportMarkdownButton from './components/ExportMarkdownButton';
 
 const IndexPage = () => {
   const [username, setUsername] = useState('');
@@ -68,6 +69,7 @@ const IndexPage = () => {
             <button className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 ml-2" onClick={handleGetRepos}>
               GET
             </button>
+            <ExportMarkdownButton username={username} repos={repos} />
           </div>
           {loading ? (
             <div className="animate-pulse">
@@ -85,7 +87,9 @@ const IndexPage = () => {
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px', padding: '20px' }}>
               {repos.map((repo, index) => (
                 <div key={repo.id} style={{ border: '1px solid #333', padding: '10px', borderRadius: '5px' }}>
-                  <h2 style={{ fontSize: '20px', margin: '0' }}>{index + 1}. {repo.name}</h2>
+                  <h2 style={{ fontSize: '20px', margin: '0' }}>
+                    {index + 1}. <a href={repo.html_url} target="_blank" rel="noopener noreferrer">{repo.name}</a>
+                  </h2>
                   <p style={{ fontSize: '16px', margin: '5px 0' }}>{repo.description || 'No description available'}</p>
                   <div style={{ display: 'flex', flexWrap: 'wrap' }}>
                     {repo.topics.map((topic, topicIndex) => (
